@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["norc"]
+  "cSpell.words": ["norc"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

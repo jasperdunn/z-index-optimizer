@@ -6,15 +6,29 @@ z-indexes can be a pain to manage. Often, they are scattered throughout your cod
 
 `z-index-optimizer` aims to provide a solution to this problem, it can:
 
-- Scan your codebase for z-indexes
-- List them out sorted by their frequency of use
-- Assign them to a logical grouping
-- Automatically update your codebase to use the new grouping
+- [x] Scan your codebase for z-indexes
+- [x] List them out sorted by their frequency of use
+- [ ] Assign them to a logical grouping
+- [ ] Automatically update your codebase to use the new grouping
 
 ### Usage
 
 ```
 // TODO - add usage instructions
+```
+
+### Development
+
+Install dependencies:
+
+```
+bun i
+```
+
+Run the CLI:
+
+```
+bun run index.ts
 ```
 
 ---

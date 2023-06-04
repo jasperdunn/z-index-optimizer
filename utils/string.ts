@@ -1,3 +1,7 @@
+/**
+ * Created because of this issue: https://github.com/gajus/table/issues/220
+ * Should be removed when the issue is resolved.
+ */
 export function truncateString(
   string = '',
   options: {
