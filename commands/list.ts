@@ -8,20 +8,20 @@ export const listCommand = new Command('list')
     'Displays a list of all z-index files in your codebase. Grouped by similar z-indexes. Sorted by total number of occurrences.'
   )
   .arguments('<directory>')
-  .option('-i, --ignoredPaths <paths...>', 'Paths that should be ignored.')
+  .option('-e, --excludedPaths <paths...>', 'Paths that should be excluded.')
   .addOption(
     new Option('-s, --sort <sort>', 'Sort by total or zIndex')
       .choices(['total', 'zIndex'])
       .default('total')
   )
-  .action(async (directory, { ignoredPaths, sort }) => {
+  .action(async (directory, { excludedPaths, sort }) => {
     if (!directory) {
       program.help()
     }
 
     const { zIndexes, sassVariables } = await getZIndexes(
       directory,
-      ignoredPaths
+      excludedPaths
     )
 
     const groupedZIndexes: ZIndexGroup[] = []

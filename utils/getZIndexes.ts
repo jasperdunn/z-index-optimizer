@@ -18,7 +18,7 @@ const regularZIndexValues = ['auto', 'inherit', 'initial', 'revert', 'unset']
 
 export async function getZIndexes(
   directoryPath: string,
-  ignoredPaths: string[] = []
+  excludedPaths: string[] = []
 ): Promise<{
   zIndexes: ZIndexMeta[]
   sassVariables: SassVariableMeta[]
@@ -70,7 +70,7 @@ export async function getZIndexes(
       }
     },
     {
-      ignoredPaths,
+      excludedPaths,
     }
   )
 
@@ -123,8 +123,8 @@ async function processFiles(
     filePath: string,
     fileLineNumber: number
   ) => Promise<void> | void,
-  config: { ignoredPaths?: string[] } = {}
-) {
+  config: { excludedPaths?: string[] } = {}
+): Promise<void> {
   const stack: string[] = [directoryPath]
 
   while (stack.length > 0) {
@@ -135,10 +135,10 @@ async function processFiles(
     for (const file of files) {
       const filePath = path.join(dirPath, file)
 
-      // Skip ignored paths and their subdirectories
+      // Skip excluded paths and their subdirectories
       if (
-        config.ignoredPaths?.some((ignorePath) =>
-          filePath.startsWith(ignorePath)
+        config.excludedPaths?.some((excludedPath) =>
+          filePath.startsWith(excludedPath)
         )
       ) {
         continue

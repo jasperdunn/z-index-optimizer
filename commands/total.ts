@@ -1,21 +1,21 @@
 import chalk from 'chalk'
 import { table, getBorderCharacters } from 'table'
 import { Command, program } from '@commander-js/extra-typings'
-import { truncateString } from '../utils/string.js'
+import { pluralize, truncateString } from '../utils/string.js'
 import { getZIndexes } from '../utils/getZIndexes.js'
 
 export const totalCommand = new Command('total')
   .description('Displays the total number of z-indexes in your codebase.')
   .arguments('<directory>')
-  .option('-i, --ignoredPaths <paths...>', 'Paths that should be ignored.')
-  .action(async (directory, { ignoredPaths }) => {
+  .option('-e, --excludedPaths <paths...>', 'Paths that should be excluded.')
+  .action(async (directory, { excludedPaths }) => {
     if (!directory) {
       program.help()
     }
 
     const { zIndexes, sassVariables } = await getZIndexes(
       directory,
-      ignoredPaths
+      excludedPaths
     )
 
     const uniqueIndexes = [...new Set(zIndexes.map((z) => z.value))]
@@ -26,7 +26,7 @@ export const totalCommand = new Command('total')
           [
             [
               zIndexes.length,
-              'numeric z-indexes',
+              `numeric ${pluralize('z-index', zIndexes.length, 'z-indexes')}`,
               chalk.grey(
                 truncateString(zIndexes.map((z) => z.value).join(), {
                   length: 150,
@@ -35,7 +35,11 @@ export const totalCommand = new Command('total')
             ],
             [
               uniqueIndexes.length,
-              'unique numeric z-indexes',
+              `unique numeric ${pluralize(
+                'z-index',
+                uniqueIndexes.length,
+                'z-indexes'
+              )}`,
               chalk.grey(
                 truncateString(uniqueIndexes.join(), {
                   length: 150,
@@ -44,7 +48,7 @@ export const totalCommand = new Command('total')
             ],
             [
               sassVariables.length,
-              'sass variables',
+              pluralize('sass variable', sassVariables.length),
               chalk.grey(
                 sassVariables
                   .map(

@@ -27,3 +27,11 @@ export function truncateString(
 
   return truncatedString + omission
 }
+
+export function pluralize(
+  word: string,
+  count: number,
+  plural = `${word}s`
+): string {
+  return count === 1 ? word : plural
+}
